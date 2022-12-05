@@ -29,8 +29,11 @@ Route::get('/jadwal', [JadwalController::class, 'index'])->name('jadwal.index');
 Route::middleware(['auth'])->group(function () {
     Route::get('/jadwal', [JadwalController::class, 'index'])->name('jadwal.index');
     Route::get('/jadwal/add', [JadwalController::class, 'create'])->name('jadwal.create');
+    Route::get('/jadwal/trash', [JadwalController::class, 'trash'])->name('jadwal.trash');
     Route::post('/jadwal/store', [JadwalController::class, 'store'])->name('jadwal.store');
     Route::get('/jadwal/edit/{id}', [JadwalController::class, 'edit'])->name('jadwal.edit');
+    Route::post('/jadwal/destroy/{id}', [JadwalController::class, 'destroy'])->name('jadwal.destroy');
+    Route::post('/jadwal/restore/{id}', [JadwalController::class, 'restore'])->name('jadwal.restore');
     Route::post('/jadwal/update/{id}', [JadwalController::class, 'update'])->name('jadwal.update');
     Route::post('/jadwal/delete/{id}', [JadwalController::class, 'delete'])->name('jadwal.delete');
 });

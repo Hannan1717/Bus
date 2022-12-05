@@ -4,16 +4,28 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+
 
 class JadwalController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $jadwal = DB::select('select * from jadwal_bus');
+
+        $jadwal = DB::table('jadwal_bus')->whereNull('deleted_at')->get();
 
         return view('jadwal.index')
             ->with('jadwal', $jadwal);
     }
+
+
+    // public function index()
+    // {
+    //     $jadwal = DB::select('select * from jadwal_bus');
+
+    //     return view('jadwal.index')
+    //         ->with('jadwal', $jadwal);
+    // }
 
     public function create()
     {
@@ -22,6 +34,16 @@ class JadwalController extends Controller
         return view('jadwal.add')
             ->with('bus', $bus);
     }
+
+    public function trash()
+    {
+        $trash =
+            DB::table('jadwal_bus')->whereNotNull('deleted_at')->get();
+
+        return view('jadwal.trash')
+            ->with('trash', $trash);
+    }
+
 
     public function store(Request $request)
     {
@@ -96,4 +118,31 @@ class JadwalController extends Controller
 
         return redirect()->route('jadwal.index')->with('success', 'Data jadwal berhasil dihapus');
     }
+
+    public function destroy($id)
+    {
+
+        DB::table('jadwal')
+            ->where('id_jadwal', $id)
+            ->update(['deleted_at' => Carbon::now()]);
+        return redirect()->route('jadwal.index')->with('success', 'Data jadwal berhasil Dihapus');
+    }
+
+    public function restore($id)
+    {
+        DB::update("update jadwal set deleted_at = :deleted_at where id_jadwal = :id_jadwal", [
+            'deleted_at' => null,
+            'id_jadwal' => $id
+        ]);
+        return redirect()->back()->with('success', 'Data jadwal berhasil direstore');
+    }
+
+    // public function forceDelete($id)
+    // {
+    //     // DB::select('select * from jadwal_bus where deleted_at!=NULL');
+    //     DB::delete('DELETE FROM jadwal WHERE id_jadwal = :id_jadwal', ['id_jadwal' => $id]);
+
+    //     // jadwal::where('id_jadwal', $id)->withTrashed()->forceDelete();
+    //     return redirect()->back()->with('success', 'Data jadwal berhasil dihapus permanent');
+    // }
 }

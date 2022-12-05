@@ -5,6 +5,7 @@
    <h4 class="mt-5 ml-4">Data jadwal</h4>
 
    <a href="{{ route('jadwal.create') }}" type="button" class="btn btn-primary rounded-3 ml-4">Tambah Data</a>
+   <a href="{{ route('jadwal.trash') }}" type="button" class="btn btn-danger rounded-3">Trash</a>
 
    @if ($message = Session::get('success'))
       <div class="alert alert-success mt-3" role="alert">
@@ -52,7 +53,7 @@
                               <h5 class="modal-title" id="hapusModalLabel">Konfirmasi</h5>
                               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                            </div>
-                           <form method="POST" action="{{ route('jadwal.delete', $data->id_jadwal) }}">
+                           <form method="POST" action="{{ route('jadwal.destroy', $data->id_jadwal) }}">
                               @csrf
                               <div class="modal-body">
                                  Apakah anda yakin ingin menghapus {{ $data->rute }}?
@@ -65,6 +66,36 @@
                         </div>
                      </div>
                   </div>
+
+                  {{-- <!-- Button trigger modal -->
+                  <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                     data-bs-target="#hapusModalSoft{{ $data->id_jadwal }}">
+                     Delete soft
+                  </button>
+
+                  <!-- Modal -->
+                  <div class="modal fade" id="hapusModalSoft{{ $data->id_jadwal }}" tabindex="-1"
+                     aria-labelledby="hapusModalSoftLabel" aria-hidden="true">
+                     <div class="modal-dialog">
+                        <div class="modal-content">
+                           <div class="modal-header">
+                              <h5 class="modal-title" id="hapusModalSoftLabel">Konfirmasi</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                           </div>
+                           <form method="POST" action="{{ route('jadwal.destroy', $data->id_jadwal) }}">
+                              @csrf_field
+                              <div class="modal-body">
+                                 Apakah anda yakin ingin menghapus {{ $data->rute }}?
+                              </div>
+                              <div class="modal-footer">
+                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                 <button type="submit" class="btn btn-primary">Ya</button>
+                              </div>
+                              @method('PUT')
+                           </form>
+                        </div>
+                     </div>
+                  </div> --}}
                </td>
             </tr>
          @endforeach

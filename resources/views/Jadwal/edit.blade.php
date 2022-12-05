@@ -27,11 +27,11 @@
             </div>
             <div class="mb-3">
                <label for="tgl" class="form-label">Tanggal</label>
-               <input type="text" class="form-control" id="tgl" name="tgl" value="{{ $data->tgl }}">
+               <input type="date" class="form-control" id="tgl" name="tgl" value="{{ $data->tgl }}">
             </div>
             <div class="mb-3">
                <label for="keberangkatan" class="form-label">Keberangkatan</label>
-               <input type="date" class="form-control" id="keberangkatan" name="keberangkatan"
+               <input type="text" class="form-control" id="keberangkatan" name="keberangkatan"
                   value="{{ $data->keberangkatan }}">
             </div>
             <div class="mb-3">
